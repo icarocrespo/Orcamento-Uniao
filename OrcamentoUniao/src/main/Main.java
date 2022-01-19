@@ -48,7 +48,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         getLinhas();
         popularDados();
-        
+        inserirDB();
     }
 
     public static void getLinhas() throws Exception {
@@ -88,7 +88,7 @@ public class Main {
 
         do {
             i++;
-            
+
             orgaoSuperior = new OrgaoSuperior();
             orgaoSubordinado = new OrgaoSubordinado();
             unidadeOrcamentaria = new UnidadeOrcamentaria();
@@ -99,7 +99,7 @@ public class Main {
             categoriaEconomica = new CategoriaEconomica();
             grupoDespesa = new GrupoDespesa();
             elementoDespesa = new ElementoDespesa();
-            
+
             // Órgão superior
             orgaoSuperior.setExercicio(Integer.parseInt(DADOS[i][j]));
             j++;
@@ -108,7 +108,7 @@ public class Main {
             orgaoSuperior.setNomeOrgaoSuperior(DADOS[i][j]);
             j++;
             orgaoSuperiorList.add(orgaoSuperior);
-            
+
             // Órgão subordinado
             orgaoSubordinado.setIdOrgaoSubordinado(Integer.parseInt(DADOS[i][j]));
             j++;
@@ -116,7 +116,7 @@ public class Main {
             j++;
             orgaoSubordinado.setIdOrgaoSuperior(orgaoSuperior);
             orgaoSubordinadoList.add(orgaoSubordinado);
-            
+
             // Undidade orçamentária
             unidadeOrcamentaria.setIdUnidadeOrcamentaria(Integer.parseInt(DADOS[i][j]));
             j++;
@@ -124,7 +124,7 @@ public class Main {
             j++;
             unidadeOrcamentaria.setIdOrgaoSubordinado(orgaoSubordinado);
             unidadeOrcamentariaList.add(unidadeOrcamentaria);
-            
+
             // Função
             funcao.setIdFuncao(Integer.parseInt(DADOS[i][j]));
             j++;
@@ -132,7 +132,7 @@ public class Main {
             j++;
             funcao.setIdUnidadeOrcamentaria(unidadeOrcamentaria);
             funcaoList.add(funcao);
-            
+
             // Subfunção
             subfuncao.setIdSubfuncao(Integer.parseInt(DADOS[i][j]));
             j++;
@@ -140,7 +140,7 @@ public class Main {
             j++;
             subfuncao.setIdFuncao(funcao);
             subfuncaoList.add(subfuncao);
-            
+
             // Programa orçamentário
             programaOrcamentario.setIdProgramaOrcamentario(Integer.parseInt(DADOS[i][j]));
             j++;
@@ -148,7 +148,7 @@ public class Main {
             j++;
             programaOrcamentario.setIdSubfuncao(subfuncao);
             programaOrcamentarioList.add(programaOrcamentario);
-            
+
             // Ação
             acao.setIdAcao(DADOS[i][j]);
             j++;
@@ -156,7 +156,7 @@ public class Main {
             j++;
             acao.setIdProgramaOrcamentario(programaOrcamentario);
             acaoList.add(acao);
-            
+
             // Categoria econômica
             categoriaEconomica.setIdCategoriaEconomica(Integer.parseInt(DADOS[i][j]));
             j++;
@@ -164,7 +164,7 @@ public class Main {
             j++;
             categoriaEconomica.setIdAcao(acao);
             categoriaEconomicaList.add(categoriaEconomica);
-            
+
             // Grupo despesa
             grupoDespesa.setIdGrupoDespesa(Integer.parseInt(DADOS[i][j]));
             j++;
@@ -172,7 +172,7 @@ public class Main {
             j++;
             grupoDespesa.setIdCategoriaEconomica(categoriaEconomica);
             grupoDespesaList.add(grupoDespesa);
-            
+
             // Elemento despesa
             elementoDespesa.setIdElementoDespesa(Integer.parseInt(DADOS[i][j]));
             j++;
@@ -196,14 +196,14 @@ public class Main {
             j++;
             elementoDespesa.setIdGrupoDespesa(grupoDespesa);
             elementoDespesaList.add(elementoDespesa);
-            
+
             j = 0;
         } while (i != 24773);
 
         return true;
     }
-    
-    public static boolean inserirDB() throws Exception{
+
+    public static boolean inserirDB() throws Exception {
         OrgaoSuperiorDAO orgaoSuperiorDAO = new OrgaoSuperiorDAO();
         OrgaoSubordinadoDAO orgaoSubordinadoDAO = new OrgaoSubordinadoDAO();
         UnidadeOrcamentariaDAO unidadeOrcamentariaDAO = new UnidadeOrcamentariaDAO();
@@ -214,9 +214,46 @@ public class Main {
         CategoriaEconomicaDAO categoriaEconomicaDAO = new CategoriaEconomicaDAO();
         GrupoDespesaDAO grupoDespesaDAO = new GrupoDespesaDAO();
         ElementoDespesaDAO elementoDespesaDAO = new ElementoDespesaDAO();
-        
-        for(OrgaoSuperior orgaoSubordinado : orgaoSuperiorList){
-            
-        }
+
+        orgaoSuperiorList.forEach((orgaoSubordinado) -> {
+            orgaoSuperiorDAO.insert(orgaoSubordinado);
+        });
+
+        orgaoSubordinadoList.forEach((orgaoSubordinado) -> {
+            orgaoSubordinadoDAO.insert(orgaoSubordinado);
+        });
+
+        unidadeOrcamentariaList.forEach((unidadeOrcamentaria) -> {
+            unidadeOrcamentariaDAO.insert(unidadeOrcamentaria);
+        });
+
+        funcaoList.forEach((funcao) -> {
+            funcaoDAO.insert(funcao);
+        });
+
+        subfuncaoList.forEach((subfuncao) -> {
+            subfuncaoDAO.insert(subfuncao);
+        });
+
+        programaOrcamentarioList.forEach((programaOrcamentario) -> {
+            programaOrcamentarioDAO.insert(programaOrcamentario);
+        });
+
+        acaoList.forEach((acao) -> {
+            acaoDAO.insert(acao);
+        });
+
+        categoriaEconomicaList.forEach((categoriaEconomica) -> {
+            categoriaEconomicaDAO.insert(categoriaEconomica);
+        });
+
+        grupoDespesaList.forEach((grupoDespesa) -> {
+            grupoDespesaDAO.insert(grupoDespesa);
+        });
+
+        elementoDespesaList.forEach((elementoDespesa) -> {
+            elementoDespesaDAO.insert(elementoDespesa);
+        });
+        return true;
     }
 }
