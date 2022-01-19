@@ -1,9 +1,20 @@
 package main;
 
+import dao.AcaoDAO;
+import dao.CategoriaEconomicaDAO;
+import dao.ElementoDespesaDAO;
+import dao.FuncaoDAO;
+import dao.GrupoDespesaDAO;
+import dao.OrgaoSubordinadoDAO;
+import dao.OrgaoSuperiorDAO;
+import dao.ProgramaOrcamentarioDAO;
+import dao.SubfuncaoDAO;
+import dao.UnidadeOrcamentariaDAO;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import model.Acao;
 import model.CategoriaEconomica;
@@ -36,10 +47,8 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         getLinhas();
-        //popularDados();
-
-        System.out.println(DADOS[1][0]);
-        System.out.println(orgaoSuperiorList.get(0).getExercicio());
+        popularDados();
+        
     }
 
     public static void getLinhas() throws Exception {
@@ -65,13 +74,149 @@ public class Main {
 
     public static boolean popularDados() throws Exception {
         int i = 0, j = 0;
+        String valor;
+        OrgaoSuperior orgaoSuperior;
+        OrgaoSubordinado orgaoSubordinado;
+        UnidadeOrcamentaria unidadeOrcamentaria;
+        Funcao funcao;
+        Subfuncao subfuncao;
+        ProgramaOrcamentario programaOrcamentario;
+        Acao acao;
+        CategoriaEconomica categoriaEconomica;
+        GrupoDespesa grupoDespesa;
+        ElementoDespesa elementoDespesa;
 
         do {
             i++;
-            orgaoSuperiorList.add(new OrgaoSuperior(Integer.parseInt(DADOS[i][j]), DADOS[i][j++], Integer.parseInt(DADOS[i][j++])));
-
+            
+            orgaoSuperior = new OrgaoSuperior();
+            orgaoSubordinado = new OrgaoSubordinado();
+            unidadeOrcamentaria = new UnidadeOrcamentaria();
+            funcao = new Funcao();
+            subfuncao = new Subfuncao();
+            programaOrcamentario = new ProgramaOrcamentario();
+            acao = new Acao();
+            categoriaEconomica = new CategoriaEconomica();
+            grupoDespesa = new GrupoDespesa();
+            elementoDespesa = new ElementoDespesa();
+            
+            // Órgão superior
+            orgaoSuperior.setExercicio(Integer.parseInt(DADOS[i][j]));
+            j++;
+            orgaoSuperior.setIdOrgaoSuperior(Integer.parseInt(DADOS[i][j]));
+            j++;
+            orgaoSuperior.setNomeOrgaoSuperior(DADOS[i][j]);
+            j++;
+            orgaoSuperiorList.add(orgaoSuperior);
+            
+            // Órgão subordinado
+            orgaoSubordinado.setIdOrgaoSubordinado(Integer.parseInt(DADOS[i][j]));
+            j++;
+            orgaoSubordinado.setNomeOrgaoSubordinado(DADOS[i][j]);
+            j++;
+            orgaoSubordinado.setIdOrgaoSuperior(orgaoSuperior);
+            orgaoSubordinadoList.add(orgaoSubordinado);
+            
+            // Undidade orçamentária
+            unidadeOrcamentaria.setIdUnidadeOrcamentaria(Integer.parseInt(DADOS[i][j]));
+            j++;
+            unidadeOrcamentaria.setNomeUnidadeOrcamentaria(DADOS[i][j]);
+            j++;
+            unidadeOrcamentaria.setIdOrgaoSubordinado(orgaoSubordinado);
+            unidadeOrcamentariaList.add(unidadeOrcamentaria);
+            
+            // Função
+            funcao.setIdFuncao(Integer.parseInt(DADOS[i][j]));
+            j++;
+            funcao.setNomeFuncao(DADOS[i][j]);
+            j++;
+            funcao.setIdUnidadeOrcamentaria(unidadeOrcamentaria);
+            funcaoList.add(funcao);
+            
+            // Subfunção
+            subfuncao.setIdSubfuncao(Integer.parseInt(DADOS[i][j]));
+            j++;
+            subfuncao.setNomeSubfuncao(DADOS[i][j]);
+            j++;
+            subfuncao.setIdFuncao(funcao);
+            subfuncaoList.add(subfuncao);
+            
+            // Programa orçamentário
+            programaOrcamentario.setIdProgramaOrcamentario(Integer.parseInt(DADOS[i][j]));
+            j++;
+            programaOrcamentario.setNomeProgramaOrcamentario(DADOS[i][j]);
+            j++;
+            programaOrcamentario.setIdSubfuncao(subfuncao);
+            programaOrcamentarioList.add(programaOrcamentario);
+            
+            // Ação
+            acao.setIdAcao(DADOS[i][j]);
+            j++;
+            acao.setNomeAcao(DADOS[i][j]);
+            j++;
+            acao.setIdProgramaOrcamentario(programaOrcamentario);
+            acaoList.add(acao);
+            
+            // Categoria econômica
+            categoriaEconomica.setIdCategoriaEconomica(Integer.parseInt(DADOS[i][j]));
+            j++;
+            categoriaEconomica.setNomeCategoriaEconomica(DADOS[i][j]);
+            j++;
+            categoriaEconomica.setIdAcao(acao);
+            categoriaEconomicaList.add(categoriaEconomica);
+            
+            // Grupo despesa
+            grupoDespesa.setIdGrupoDespesa(Integer.parseInt(DADOS[i][j]));
+            j++;
+            grupoDespesa.setNomeGrupoDespesa(DADOS[i][j]);
+            j++;
+            grupoDespesa.setIdCategoriaEconomica(categoriaEconomica);
+            grupoDespesaList.add(grupoDespesa);
+            
+            // Elemento despesa
+            elementoDespesa.setIdElementoDespesa(Integer.parseInt(DADOS[i][j]));
+            j++;
+            elementoDespesa.setNomeElementoDespesa(DADOS[i][j]);
+            j++;
+            valor = DADOS[i][j];
+            valor = valor.replace(",", ".");
+            elementoDespesa.setOrcamentoInicial(new BigDecimal(valor));
+            j++;
+            valor = DADOS[i][j];
+            valor = valor.replace(",", ".");
+            elementoDespesa.setOrcamentoAtualizado(new BigDecimal(valor));
+            j++;
+            valor = DADOS[i][j];
+            valor = valor.replace(",", ".");
+            elementoDespesa.setOrcamentoEmpenhado(new BigDecimal(valor));
+            j++;
+            valor = DADOS[i][j];
+            valor = valor.replace(",", ".");
+            elementoDespesa.setOrcamentoRealizado(new BigDecimal(valor));
+            j++;
+            elementoDespesa.setIdGrupoDespesa(grupoDespesa);
+            elementoDespesaList.add(elementoDespesa);
+            
+            j = 0;
         } while (i != 24773);
 
         return true;
+    }
+    
+    public static boolean inserirDB() throws Exception{
+        OrgaoSuperiorDAO orgaoSuperiorDAO = new OrgaoSuperiorDAO();
+        OrgaoSubordinadoDAO orgaoSubordinadoDAO = new OrgaoSubordinadoDAO();
+        UnidadeOrcamentariaDAO unidadeOrcamentariaDAO = new UnidadeOrcamentariaDAO();
+        FuncaoDAO funcaoDAO = new FuncaoDAO();
+        SubfuncaoDAO subfuncaoDAO = new SubfuncaoDAO();
+        ProgramaOrcamentarioDAO programaOrcamentarioDAO = new ProgramaOrcamentarioDAO();
+        AcaoDAO acaoDAO = new AcaoDAO();
+        CategoriaEconomicaDAO categoriaEconomicaDAO = new CategoriaEconomicaDAO();
+        GrupoDespesaDAO grupoDespesaDAO = new GrupoDespesaDAO();
+        ElementoDespesaDAO elementoDespesaDAO = new ElementoDespesaDAO();
+        
+        for(OrgaoSuperior orgaoSubordinado : orgaoSuperiorList){
+            
+        }
     }
 }
