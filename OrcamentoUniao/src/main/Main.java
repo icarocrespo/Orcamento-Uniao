@@ -48,7 +48,11 @@ public class Main {
     public static void main(String[] args) throws Exception {
         getLinhas();
         popularDados();
-        inserirDB();
+        //inserirDB();
+
+        elementoDespesaList.forEach((elementoDespesa) -> {
+            elementoDespesa.toString();
+        });
     }
 
     public static void getLinhas() throws Exception {
