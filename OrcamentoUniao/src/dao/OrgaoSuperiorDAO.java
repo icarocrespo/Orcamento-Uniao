@@ -9,5 +9,6 @@ import model.OrgaoSuperior;
 public class OrgaoSuperiorDAO extends GenericDAO<OrgaoSuperior, Integer>{
     
     public OrgaoSuperiorDAO(){
+        super(OrgaoSuperior.class);
     }
 }

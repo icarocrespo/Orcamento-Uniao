@@ -9,5 +9,6 @@ import model.CategoriaEconomica;
 public class CategoriaEconomicaDAO extends GenericDAO<CategoriaEconomica, Integer>{
     
     public CategoriaEconomicaDAO(){
+        super(CategoriaEconomica.class);
     }
 }

@@ -9,5 +9,6 @@ import model.ProgramaOrcamentario;
 public class ProgramaOrcamentarioDAO extends GenericDAO<ProgramaOrcamentario, Integer>{
     
     public ProgramaOrcamentarioDAO(){
+        super(ProgramaOrcamentario.class);
     }
 }

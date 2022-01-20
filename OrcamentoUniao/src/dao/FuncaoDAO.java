@@ -10,5 +10,6 @@ import model.Funcao;
 public class FuncaoDAO extends GenericDAO<Funcao, Integer>{
     
     public FuncaoDAO(){
+        super(Funcao.class);
     }
 }

@@ -10,5 +10,6 @@ import model.GrupoDespesa;
 public class GrupoDespesaDAO extends GenericDAO<GrupoDespesa, Integer>{
     
     public GrupoDespesaDAO(){
+        super(GrupoDespesa.class);
     }
 }

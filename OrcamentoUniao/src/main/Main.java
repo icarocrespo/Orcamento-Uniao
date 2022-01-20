@@ -215,44 +215,64 @@ public class Main {
         GrupoDespesaDAO grupoDespesaDAO = new GrupoDespesaDAO();
         ElementoDespesaDAO elementoDespesaDAO = new ElementoDespesaDAO();
 
-        orgaoSuperiorList.forEach((orgaoSubordinado) -> {
-            orgaoSuperiorDAO.insert(orgaoSubordinado);
+        orgaoSuperiorList.forEach((orgaoSuperior) -> {
+            if (orgaoSuperiorDAO.searchByPK(orgaoSuperior.getIdOrgaoSuperior()) == null) {
+                orgaoSuperiorDAO.insert(orgaoSuperior);
+            }
         });
 
         orgaoSubordinadoList.forEach((orgaoSubordinado) -> {
-            orgaoSubordinadoDAO.insert(orgaoSubordinado);
+            if (orgaoSubordinadoDAO.searchByPK(orgaoSubordinado.getIdOrgaoSubordinado()) == null) {
+                orgaoSubordinadoDAO.insert(orgaoSubordinado);
+            }
         });
 
         unidadeOrcamentariaList.forEach((unidadeOrcamentaria) -> {
-            unidadeOrcamentariaDAO.insert(unidadeOrcamentaria);
+            if (unidadeOrcamentariaDAO.searchByPK(unidadeOrcamentaria.getIdUnidadeOrcamentaria()) == null) {
+                unidadeOrcamentariaDAO.insert(unidadeOrcamentaria);
+            }
         });
 
         funcaoList.forEach((funcao) -> {
-            funcaoDAO.insert(funcao);
+            if (funcaoDAO.searchByPK(funcao.getIdFuncao()) == null) {
+                funcaoDAO.insert(funcao);
+            }
         });
 
         subfuncaoList.forEach((subfuncao) -> {
-            subfuncaoDAO.insert(subfuncao);
+            if (subfuncaoDAO.searchByPK(subfuncao.getIdSubfuncao()) == null) {
+                subfuncaoDAO.insert(subfuncao);
+            }
         });
 
         programaOrcamentarioList.forEach((programaOrcamentario) -> {
-            programaOrcamentarioDAO.insert(programaOrcamentario);
+            if (programaOrcamentarioDAO.searchByPK(programaOrcamentario.getIdProgramaOrcamentario()) == null) {
+                programaOrcamentarioDAO.insert(programaOrcamentario);
+            }
         });
 
         acaoList.forEach((acao) -> {
-            acaoDAO.insert(acao);
+            if (acaoDAO.searchByPK(acao.getIdAcao()) == null) {
+                acaoDAO.insert(acao);
+            }
         });
 
         categoriaEconomicaList.forEach((categoriaEconomica) -> {
-            categoriaEconomicaDAO.insert(categoriaEconomica);
+            if (categoriaEconomicaDAO.searchByPK(categoriaEconomica.getIdCategoriaEconomica()) == null) {
+                categoriaEconomicaDAO.insert(categoriaEconomica);
+            }
         });
 
         grupoDespesaList.forEach((grupoDespesa) -> {
-            grupoDespesaDAO.insert(grupoDespesa);
+            if (grupoDespesaDAO.searchByPK(grupoDespesa.getIdGrupoDespesa()) == null) {
+                grupoDespesaDAO.insert(grupoDespesa);
+            }
         });
 
         elementoDespesaList.forEach((elementoDespesa) -> {
-            elementoDespesaDAO.insert(elementoDespesa);
+            if (elementoDespesaDAO.searchByPK(elementoDespesa.getIdElementoDespesa()) == null) {
+                elementoDespesaDAO.insert(elementoDespesa);
+            }
         });
         return true;
     }

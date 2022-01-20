@@ -10,5 +10,6 @@ import model.UnidadeOrcamentaria;
 public class UnidadeOrcamentariaDAO extends GenericDAO<UnidadeOrcamentaria, Integer>{
     
     public UnidadeOrcamentariaDAO(){
+        super(UnidadeOrcamentaria.class);
     }
 }

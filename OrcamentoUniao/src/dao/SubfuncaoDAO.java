@@ -9,5 +9,6 @@ import model.Subfuncao;
 public class SubfuncaoDAO extends GenericDAO<Subfuncao, Integer>{
     
     public SubfuncaoDAO(){
+        super(Subfuncao.class);
     }
 }
