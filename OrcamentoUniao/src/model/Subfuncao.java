@@ -18,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,6 +27,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "subfuncao")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Subfuncao.findAll", query = "SELECT s FROM Subfuncao s")
     , @NamedQuery(name = "Subfuncao.findByIdSubfuncao", query = "SELECT s FROM Subfuncao s WHERE s.idSubfuncao = :idSubfuncao")
@@ -73,6 +76,7 @@ public class Subfuncao implements Serializable {
         this.nomeSubfuncao = nomeSubfuncao;
     }
 
+    @XmlTransient
     public List<ProgramaOrcamentario> getProgramaOrcamentarioList() {
         return programaOrcamentarioList;
     }

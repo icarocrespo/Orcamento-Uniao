@@ -91,4 +91,5 @@ public abstract class GenericDAO<T, I extends Serializable> {
     public List<T> list() {
         return em.createNamedQuery(persistedClass.getSimpleName() + ".findAll").getResultList();
     }
+
 }

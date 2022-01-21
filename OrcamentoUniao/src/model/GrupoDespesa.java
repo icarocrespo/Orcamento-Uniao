@@ -18,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,6 +27,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "grupo_despesa")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "GrupoDespesa.findAll", query = "SELECT g FROM GrupoDespesa g")
     , @NamedQuery(name = "GrupoDespesa.findByIdGrupoDespesa", query = "SELECT g FROM GrupoDespesa g WHERE g.idGrupoDespesa = :idGrupoDespesa")
@@ -42,7 +45,7 @@ public class GrupoDespesa implements Serializable {
     @JoinColumn(name = "id_categoria_economica", referencedColumnName = "id_categoria_economica")
     @ManyToOne(optional = false)
     private CategoriaEconomica idCategoriaEconomica;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGrupoDespesa")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grupoDespesa")
     private List<ElementoDespesa> elementoDespesaList;
 
     public GrupoDespesa() {
@@ -81,6 +84,7 @@ public class GrupoDespesa implements Serializable {
         this.idCategoriaEconomica = idCategoriaEconomica;
     }
 
+    @XmlTransient
     public List<ElementoDespesa> getElementoDespesaList() {
         return elementoDespesaList;
     }

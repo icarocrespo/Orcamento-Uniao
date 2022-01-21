@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import model.Acao;
 import model.CategoriaEconomica;
 import model.ElementoDespesa;
+import model.ElementoDespesaPK;
 import model.Funcao;
 import model.GrupoDespesa;
 import model.OrgaoSubordinado;
@@ -48,11 +49,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         getLinhas();
         popularDados();
-        //inserirDB();
-
-        elementoDespesaList.forEach((elementoDespesa) -> {
-            elementoDespesa.toString();
-        });
+        inserirDB();
     }
 
     public static void getLinhas() throws Exception {
@@ -89,7 +86,8 @@ public class Main {
         CategoriaEconomica categoriaEconomica;
         GrupoDespesa grupoDespesa;
         ElementoDespesa elementoDespesa;
-
+        ElementoDespesaPK elementoDespesaPK;
+        
         do {
             i++;
 
@@ -103,7 +101,8 @@ public class Main {
             categoriaEconomica = new CategoriaEconomica();
             grupoDespesa = new GrupoDespesa();
             elementoDespesa = new ElementoDespesa();
-
+            elementoDespesaPK = new ElementoDespesaPK();
+            
             // Órgão superior
             orgaoSuperior.setExercicio(Integer.parseInt(DADOS[i][j]));
             j++;
@@ -177,8 +176,12 @@ public class Main {
             grupoDespesa.setIdCategoriaEconomica(categoriaEconomica);
             grupoDespesaList.add(grupoDespesa);
 
+            // Elemento despesa (PK)
+            elementoDespesaPK.setIdGrupoDespesa(grupoDespesa.getIdGrupoDespesa());
+            elementoDespesaPK.setIdElementoDespesa(Integer.parseInt(DADOS[i][j]));
+            
             // Elemento despesa
-            elementoDespesa.setIdElementoDespesa(Integer.parseInt(DADOS[i][j]));
+            elementoDespesa.setElementoDespesaPK(elementoDespesaPK);
             j++;
             elementoDespesa.setNomeElementoDespesa(DADOS[i][j]);
             j++;
@@ -198,7 +201,6 @@ public class Main {
             valor = valor.replace(",", ".");
             elementoDespesa.setOrcamentoRealizado(new BigDecimal(valor));
             j++;
-            elementoDespesa.setIdGrupoDespesa(grupoDespesa);
             elementoDespesaList.add(elementoDespesa);
 
             j = 0;
@@ -272,9 +274,15 @@ public class Main {
                 grupoDespesaDAO.insert(grupoDespesa);
             }
         });
-
+        
+        grupoDespesaList.forEach((grupoDespesa) -> {
+            if (grupoDespesaDAO.searchByPK(grupoDespesa.getIdGrupoDespesa()) == null) {
+                grupoDespesaDAO.insert(grupoDespesa);
+            }
+        });
+        
         elementoDespesaList.forEach((elementoDespesa) -> {
-            if (elementoDespesaDAO.searchByPK(elementoDespesa.getIdElementoDespesa()) == null) {
+            if (elementoDespesaDAO.searchByPK(elementoDespesa.getElementoDespesaPK()) == null) {
                 elementoDespesaDAO.insert(elementoDespesa);
             }
         });
