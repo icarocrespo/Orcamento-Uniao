@@ -45,7 +45,7 @@ public class GrupoDespesa implements Serializable {
     @JoinColumn(name = "id_categoria_economica", referencedColumnName = "id_categoria_economica")
     @ManyToOne(optional = false)
     private CategoriaEconomica idCategoriaEconomica;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grupoDespesa")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGrupoDespesa")
     private List<ElementoDespesa> elementoDespesaList;
 
     public GrupoDespesa() {

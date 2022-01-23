@@ -9,8 +9,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -27,18 +29,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ElementoDespesa.findAll", query = "SELECT e FROM ElementoDespesa e")
-    , @NamedQuery(name = "ElementoDespesa.findByIdElementoDespesa", query = "SELECT e FROM ElementoDespesa e WHERE e.elementoDespesaPK.idElementoDespesa = :idElementoDespesa")
+    , @NamedQuery(name = "ElementoDespesa.findById", query = "SELECT e FROM ElementoDespesa e WHERE e.id = :id")
+    , @NamedQuery(name = "ElementoDespesa.findByIdElementoDespesa", query = "SELECT e FROM ElementoDespesa e WHERE e.idElementoDespesa = :idElementoDespesa")
     , @NamedQuery(name = "ElementoDespesa.findByNomeElementoDespesa", query = "SELECT e FROM ElementoDespesa e WHERE e.nomeElementoDespesa = :nomeElementoDespesa")
     , @NamedQuery(name = "ElementoDespesa.findByOrcamentoInicial", query = "SELECT e FROM ElementoDespesa e WHERE e.orcamentoInicial = :orcamentoInicial")
     , @NamedQuery(name = "ElementoDespesa.findByOrcamentoAtualizado", query = "SELECT e FROM ElementoDespesa e WHERE e.orcamentoAtualizado = :orcamentoAtualizado")
     , @NamedQuery(name = "ElementoDespesa.findByOrcamentoEmpenhado", query = "SELECT e FROM ElementoDespesa e WHERE e.orcamentoEmpenhado = :orcamentoEmpenhado")
-    , @NamedQuery(name = "ElementoDespesa.findByOrcamentoRealizado", query = "SELECT e FROM ElementoDespesa e WHERE e.orcamentoRealizado = :orcamentoRealizado")
-    , @NamedQuery(name = "ElementoDespesa.findByIdGrupoDespesa", query = "SELECT e FROM ElementoDespesa e WHERE e.elementoDespesaPK.idGrupoDespesa = :idGrupoDespesa")})
+    , @NamedQuery(name = "ElementoDespesa.findByOrcamentoRealizado", query = "SELECT e FROM ElementoDespesa e WHERE e.orcamentoRealizado = :orcamentoRealizado")})
 public class ElementoDespesa implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ElementoDespesaPK elementoDespesaPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Basic(optional = false)
+    @Column(name = "id_elemento_despesa")
+    private int idElementoDespesa;
     @Basic(optional = false)
     @Column(name = "nome_elemento_despesa")
     private String nomeElementoDespesa;
@@ -55,19 +63,20 @@ public class ElementoDespesa implements Serializable {
     @Basic(optional = false)
     @Column(name = "orcamento_realizado")
     private BigDecimal orcamentoRealizado;
-    @JoinColumn(name = "id_grupo_despesa", referencedColumnName = "id_grupo_despesa", insertable = false, updatable = false)
+    @JoinColumn(name = "id_grupo_despesa", referencedColumnName = "id_grupo_despesa")
     @ManyToOne(optional = false)
-    private GrupoDespesa grupoDespesa;
+    private GrupoDespesa idGrupoDespesa;
 
     public ElementoDespesa() {
     }
 
-    public ElementoDespesa(ElementoDespesaPK elementoDespesaPK) {
-        this.elementoDespesaPK = elementoDespesaPK;
+    public ElementoDespesa(Integer id) {
+        this.id = id;
     }
 
-    public ElementoDespesa(ElementoDespesaPK elementoDespesaPK, String nomeElementoDespesa, BigDecimal orcamentoInicial, BigDecimal orcamentoAtualizado, BigDecimal orcamentoEmpenhado, BigDecimal orcamentoRealizado) {
-        this.elementoDespesaPK = elementoDespesaPK;
+    public ElementoDespesa(Integer id, int idElementoDespesa, String nomeElementoDespesa, BigDecimal orcamentoInicial, BigDecimal orcamentoAtualizado, BigDecimal orcamentoEmpenhado, BigDecimal orcamentoRealizado) {
+        this.id = id;
+        this.idElementoDespesa = idElementoDespesa;
         this.nomeElementoDespesa = nomeElementoDespesa;
         this.orcamentoInicial = orcamentoInicial;
         this.orcamentoAtualizado = orcamentoAtualizado;
@@ -75,16 +84,20 @@ public class ElementoDespesa implements Serializable {
         this.orcamentoRealizado = orcamentoRealizado;
     }
 
-    public ElementoDespesa(int idElementoDespesa, int idGrupoDespesa) {
-        this.elementoDespesaPK = new ElementoDespesaPK(idElementoDespesa, idGrupoDespesa);
+    public Integer getId() {
+        return id;
     }
 
-    public ElementoDespesaPK getElementoDespesaPK() {
-        return elementoDespesaPK;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setElementoDespesaPK(ElementoDespesaPK elementoDespesaPK) {
-        this.elementoDespesaPK = elementoDespesaPK;
+    public int getIdElementoDespesa() {
+        return idElementoDespesa;
+    }
+
+    public void setIdElementoDespesa(int idElementoDespesa) {
+        this.idElementoDespesa = idElementoDespesa;
     }
 
     public String getNomeElementoDespesa() {
@@ -127,18 +140,18 @@ public class ElementoDespesa implements Serializable {
         this.orcamentoRealizado = orcamentoRealizado;
     }
 
-    public GrupoDespesa getGrupoDespesa() {
-        return grupoDespesa;
+    public GrupoDespesa getIdGrupoDespesa() {
+        return idGrupoDespesa;
     }
 
-    public void setGrupoDespesa(GrupoDespesa grupoDespesa) {
-        this.grupoDespesa = grupoDespesa;
+    public void setIdGrupoDespesa(GrupoDespesa idGrupoDespesa) {
+        this.idGrupoDespesa = idGrupoDespesa;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (elementoDespesaPK != null ? elementoDespesaPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -149,7 +162,7 @@ public class ElementoDespesa implements Serializable {
             return false;
         }
         ElementoDespesa other = (ElementoDespesa) object;
-        if ((this.elementoDespesaPK == null && other.elementoDespesaPK != null) || (this.elementoDespesaPK != null && !this.elementoDespesaPK.equals(other.elementoDespesaPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -157,7 +170,7 @@ public class ElementoDespesa implements Serializable {
 
     @Override
     public String toString() {
-        return "model.ElementoDespesa[ elementoDespesaPK=" + elementoDespesaPK + " ]";
+        return "model.ElementoDespesa[ id=" + id + " ]";
     }
     
 }
