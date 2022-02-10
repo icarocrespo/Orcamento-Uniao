@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -44,7 +45,7 @@ public class OrgaoSuperior implements Serializable {
     @Basic(optional = false)
     @Column(name = "exercicio")
     private int exercicio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOrgaoSuperior")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOrgaoSuperior", fetch = FetchType.EAGER)
     private List<OrgaoSubordinado> orgaoSubordinadoList;
 
     public OrgaoSuperior() {

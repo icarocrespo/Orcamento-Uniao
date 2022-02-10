@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,9 +44,9 @@ public class Funcao implements Serializable {
     @Column(name = "nome_funcao")
     private String nomeFuncao;
     @JoinColumn(name = "id_unidade_orcamentaria", referencedColumnName = "id_unidade_orcamentaria")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private UnidadeOrcamentaria idUnidadeOrcamentaria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncao")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncao", fetch = FetchType.EAGER)
     private List<Subfuncao> subfuncaoList;
 
     public Funcao() {

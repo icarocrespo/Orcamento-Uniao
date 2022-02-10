@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,9 +44,9 @@ public class OrgaoSubordinado implements Serializable {
     @Column(name = "nome_orgao_subordinado")
     private String nomeOrgaoSubordinado;
     @JoinColumn(name = "id_orgao_superior", referencedColumnName = "id_orgao_superior")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private OrgaoSuperior idOrgaoSuperior;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOrgaoSubordinado")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOrgaoSubordinado", fetch = FetchType.EAGER)
     private List<UnidadeOrcamentaria> unidadeOrcamentariaList;
 
     public OrgaoSubordinado() {

@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -42,10 +43,10 @@ public class UnidadeOrcamentaria implements Serializable {
     @Basic(optional = false)
     @Column(name = "nome_unidade_orcamentaria")
     private String nomeUnidadeOrcamentaria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUnidadeOrcamentaria")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUnidadeOrcamentaria", fetch = FetchType.EAGER)
     private List<Funcao> funcaoList;
     @JoinColumn(name = "id_orgao_subordinado", referencedColumnName = "id_orgao_subordinado")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private OrgaoSubordinado idOrgaoSubordinado;
 
     public UnidadeOrcamentaria() {

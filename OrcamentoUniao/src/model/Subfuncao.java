@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -42,10 +43,10 @@ public class Subfuncao implements Serializable {
     @Basic(optional = false)
     @Column(name = "nome_subfuncao")
     private String nomeSubfuncao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSubfuncao")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSubfuncao", fetch = FetchType.EAGER)
     private List<ProgramaOrcamentario> programaOrcamentarioList;
     @JoinColumn(name = "id_funcao", referencedColumnName = "id_funcao")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Funcao idFuncao;
 
     public Subfuncao() {

@@ -204,15 +204,15 @@ public class Main {
     }
 
     public static boolean inserirDB() throws Exception {
-        OrgaoSuperiorDAO orgaoSuperiorDAO = new OrgaoSuperiorDAO();
-        OrgaoSubordinadoDAO orgaoSubordinadoDAO = new OrgaoSubordinadoDAO();
-        UnidadeOrcamentariaDAO unidadeOrcamentariaDAO = new UnidadeOrcamentariaDAO();
-        FuncaoDAO funcaoDAO = new FuncaoDAO();
-        SubfuncaoDAO subfuncaoDAO = new SubfuncaoDAO();
-        ProgramaOrcamentarioDAO programaOrcamentarioDAO = new ProgramaOrcamentarioDAO();
-        AcaoDAO acaoDAO = new AcaoDAO();
-        CategoriaEconomicaDAO categoriaEconomicaDAO = new CategoriaEconomicaDAO();
-        GrupoDespesaDAO grupoDespesaDAO = new GrupoDespesaDAO();
+//        OrgaoSuperiorDAO orgaoSuperiorDAO = new OrgaoSuperiorDAO();
+//        OrgaoSubordinadoDAO orgaoSubordinadoDAO = new OrgaoSubordinadoDAO();
+//        UnidadeOrcamentariaDAO unidadeOrcamentariaDAO = new UnidadeOrcamentariaDAO();
+//        FuncaoDAO funcaoDAO = new FuncaoDAO();
+//        SubfuncaoDAO subfuncaoDAO = new SubfuncaoDAO();
+//        ProgramaOrcamentarioDAO programaOrcamentarioDAO = new ProgramaOrcamentarioDAO();
+//        AcaoDAO acaoDAO = new AcaoDAO();
+//        CategoriaEconomicaDAO categoriaEconomicaDAO = new CategoriaEconomicaDAO();
+//        GrupoDespesaDAO grupoDespesaDAO = new GrupoDespesaDAO();
         ElementoDespesaDAO elementoDespesaDAO = new ElementoDespesaDAO();
 
 //        orgaoSuperiorList.forEach((orgaoSuperior) -> {

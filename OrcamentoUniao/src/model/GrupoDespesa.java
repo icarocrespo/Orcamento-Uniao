@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,9 +44,9 @@ public class GrupoDespesa implements Serializable {
     @Column(name = "nome_grupo_despesa")
     private String nomeGrupoDespesa;
     @JoinColumn(name = "id_categoria_economica", referencedColumnName = "id_categoria_economica")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private CategoriaEconomica idCategoriaEconomica;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGrupoDespesa")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGrupoDespesa", fetch = FetchType.EAGER)
     private List<ElementoDespesa> elementoDespesaList;
 
     public GrupoDespesa() {

@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,7 +65,7 @@ public class ElementoDespesa implements Serializable {
     @Column(name = "orcamento_realizado")
     private BigDecimal orcamentoRealizado;
     @JoinColumn(name = "id_grupo_despesa", referencedColumnName = "id_grupo_despesa")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private GrupoDespesa idGrupoDespesa;
 
     public ElementoDespesa() {

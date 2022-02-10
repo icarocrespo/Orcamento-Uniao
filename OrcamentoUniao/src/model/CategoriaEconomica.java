@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -42,10 +43,10 @@ public class CategoriaEconomica implements Serializable {
     @Basic(optional = false)
     @Column(name = "nome_categoria_economica")
     private String nomeCategoriaEconomica;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategoriaEconomica")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategoriaEconomica", fetch = FetchType.EAGER)
     private List<GrupoDespesa> grupoDespesaList;
     @JoinColumn(name = "id_acao", referencedColumnName = "id_acao")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Acao idAcao;
 
     public CategoriaEconomica() {
